@@ -7,22 +7,33 @@
 //
 
 #import "ViewController.h"
-#import "UIView+JXExtension.h"
+#import "JXHeaderView.h"
+#import "JXSelectView.h"
+#import "JXOneController.h"
+#import "JXTwoController.h"
 
-// 重用表格标识
-static NSString * const reuseIdentifier = @"Cell";
-// 重用表格标识
-static NSString * const reuseIdentifierRight = @"CellRight";
-// 重用头部标识
-static NSString * const reuseHeaderIdentifier = @"reusableView";
+/** 屏幕宽度 */
+#define kWidth [UIScreen mainScreen].bounds.size.width
+/** 屏幕高度 */
+#define kHeight [UIScreen mainScreen].bounds.size.height
+/** 屏幕尺寸 */
+#define kScreen [UIScreen mainScreen].bounds
 
-@interface ViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
-/** collectionView */
-@property (nonatomic,weak) UICollectionView * collectionView;
+@interface ViewController ()<JXSelectViewDelegate,UIScrollViewDelegate>
+/** 轮播图 */
+@property (nonatomic,weak) JXHeaderView * banerView;
+/** 内容蓝 */
+@property (nonatomic,weak) UIScrollView * contentVc;
+/** 头部选项卡以及轮播图背景 */
+@property (nonatomic,weak) UIView * headerView;
 /** 选项卡 */
-@property (nonatomic,weak) UIView * scrollView;
-/** 选项卡头部视图 */
-@property (nonatomic,weak) UIView * headView;
+@property (nonatomic,weak) JXSelectView * selectView;
+
+/** 是否悬停 */
+@property (nonatomic,assign,getter=isStop) BOOL stop;
+
+/** 便宜 */
+@property (nonatomic,assign) CGPoint contentSet;
 @end
 
 @implementation ViewController
@@ -30,129 +41,146 @@ static NSString * const reuseHeaderIdentifier = @"reusableView";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 提前注册cell
-    [self.collectionView registerClass:[UICollectionViewCell class]
-            forCellWithReuseIdentifier:reuseIdentifier];
+    // 初始化
+    [self setupView];
     
+    // 添加控制器
+    [self setupAddChilds];
     
-    // 注册headerView
-    [self.collectionView registerClass:[UICollectionReusableView class]
-            forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                   withReuseIdentifier:reuseHeaderIdentifier];
+    [self setupChildViewIndex:0];
     
-    CGFloat w = [UIScreen mainScreen].bounds.size.width;
-    self.scrollView.frame = CGRectMake(0, 120, w, 40);
+    [self.view insertSubview:self.headerView atIndex:MAXFLOAT];
     
-}
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
+    // 用来接收通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotiFromBase:) name:@"POSTOFFSET" object:nil];
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section {
+#pragma mark - 接收通知
+- (void)receiveNotiFromBase:(NSNotification *)noti {
+    NSDictionary * dict = noti.userInfo;
+    CGFloat y = [dict[@"offSet"] floatValue];
+    CGPoint offset = CGPointMake(0, y);
+    self.contentSet = offset;
     
-    return 15;
+    BOOL stop = [dict[@"stop"] boolValue];
+    self.stop = stop;
+    
+}
+#pragma mark - 添加控制器
+- (void)setupAddChilds {
+    // 这里只是添加控制器，实际上控制器上的view并没有添加，因为控制器上的view是懒加载添加
+    
+    // 添加控制器
+    JXOneController * oneController = [[JXOneController alloc] init];
+    oneController.headerViewBg = self.headerView;
+    oneController.selectViewBg = self.selectView;
+    oneController.banerViewBg = self.banerView;
+    [self addChildViewController:oneController];
+    
+    // 添加控制器
+    JXTwoController * twoController = [[JXTwoController alloc] init];
+    twoController.headerViewBg = self.headerView;
+    twoController.selectViewBg = self.selectView;
+    twoController.banerViewBg = self.banerView;
+    [self addChildViewController:twoController];
+    
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+#pragma mark - 初始化
+- (void)setupView {
+    self.headerView.frame = CGRectMake(0, 0, kWidth, 160);
+    self.banerView.frame = CGRectMake(0, 0, kWidth, 120);
+    self.selectView.frame = CGRectMake(0, 120, kWidth, 40);
     
-    UICollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    CGFloat r = arc4random_uniform(256) / 255.0 ;
-    CGFloat g = arc4random_uniform(256) / 255.0 ;
-    CGFloat b = arc4random_uniform(256) / 255.0 ;
-    
-    cell.backgroundColor = [UIColor colorWithRed:r green:g blue:b alpha:1.0];
-    return cell;
-}
-
-
-
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    
-    UICollectionReusableView * headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                                                                               withReuseIdentifier:reuseHeaderIdentifier
-                                                                                      forIndexPath:indexPath];
-    CGFloat x = headerView.bounds.origin.x;
-    CGFloat y = headerView.bounds.origin.y ;
-    CGFloat w = headerView.bounds.size.width;
-    CGFloat h = headerView.bounds.size.height - 10;
-    UIView * view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor cyanColor];
-    view.frame = CGRectMake(x, y, w, h);
-    [headerView addSubview:view];
-    self.headView = view;
-    return headerView;
-}
-
-
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat w = ([UIScreen mainScreen].bounds.size.width - 20) / 2;
-    return CGSizeMake(w, 100);
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake([UIScreen mainScreen].bounds.size.width, 170);
-}
-
-
-#pragma mark - <UIScrollViewDelegate>
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    // 监听scrollView的滚动，当滚动偏移量大于headView的高度的时候悬停scrollView(将之父控件设置为控制器view即可)
-    if (scrollView.contentOffset.y >= self.headView.frame.size.height - 50) { // 当到达顶部的时候设置悬停
-        // 取出frame，将之y坐标设置为0
-        CGRect hoverRect = self.scrollView.frame;
-        hoverRect.origin.y = 20;
-        self.scrollView.frame = hoverRect;
-        [self.view addSubview:self.scrollView];
-        
-    } else { // 如果没有达到悬停位置，父控件就设置为headView
-        // 取出frame，将之y坐标设置为0
-        CGRect hoverRect = self.scrollView.frame;
-        NSLog(@"%@",NSStringFromCGRect(self.scrollView.frame));
-        hoverRect.origin.y = CGRectGetMaxY(self.headView.frame) - 40;
-        self.scrollView.frame = hoverRect;
-        [self.headView addSubview:self.scrollView];
-    }
 }
 
 #pragma mark - 懒加载
-- (UICollectionView *)collectionView{
-    if (_collectionView == nil) {
-        
-        UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.estimatedItemSize = CGSizeMake(10, 10);
-        flowLayout.minimumLineSpacing = 5;
-        flowLayout.minimumInteritemSpacing = 10;
-        
-        CGFloat w = [UIScreen mainScreen].bounds.size.width;
-        CGFloat h = [UIScreen mainScreen].bounds.size.height;
-        CGRect rect = CGRectMake(0, 20, w, h);
-        UICollectionView * collectionView = [[UICollectionView alloc] initWithFrame:rect collectionViewLayout:flowLayout];
-        collectionView.delegate = self;
-        collectionView.dataSource = self;
-        collectionView.backgroundColor = [UIColor whiteColor];
-        [self.view addSubview:collectionView];
-        _collectionView = collectionView;
+
+- (UIView *)headerView{
+    if (_headerView == nil) {
+        UIView * headerView = [[UIView alloc] init];
+        headerView.backgroundColor = [UIColor grayColor];
+        // 添加到窗口上
+        [self.view addSubview:headerView];
+        _headerView = headerView;
     }
-    return _collectionView;
+    return _headerView;
 }
 
-- (UIView *)scrollView{
-    if (_scrollView == nil) {
-        // 下面选项框
-        UIView * scrollView = [[UIView alloc] init];
-        scrollView.backgroundColor = [UIColor lightGrayColor];
-        [self.collectionView addSubview:scrollView];
-        _scrollView = scrollView;
+- (UIView *)banerView{
+    if (_banerView == nil) {
+        JXHeaderView * banerView = [[JXHeaderView alloc] init];
+        // 添加到背景图上
+        [self.headerView addSubview:banerView];
+        _banerView = banerView;
     }
-    return _scrollView;
+    return _banerView;
 }
+
+- (JXSelectView *)selectView{
+    if (_selectView == nil) {
+        JXSelectView * selectView= [[JXSelectView alloc] init];
+        // 添加到背景图上
+        [self.headerView addSubview:selectView];
+        selectView.delegate = self;
+        _selectView = selectView;
+    }
+    return _selectView;
+}
+
+- (UIScrollView *)contentVc {
+    if (_contentVc == nil) {
+        UIScrollView * contentScrollView = [[UIScrollView alloc] init];
+        contentScrollView.frame = CGRectMake(0, 20, kWidth, kHeight - 20);
+        [self.view addSubview:contentScrollView];
+        contentScrollView.backgroundColor = [UIColor whiteColor];
+        contentScrollView.pagingEnabled = YES;
+        contentScrollView.delegate = self;
+        _contentVc = contentScrollView;
+    }
+    return _contentVc;
+}
+
+#pragma mark - JXSelectViewDelegate
+- (void)selectView:(JXSelectView *)selectView buttonDidSelect:(UIButton *)button {
+    [self setupChildViewIndex:button.tag];
+}
+
+
+// 选中视图控制器
+- (void)setupChildViewIndex:(NSInteger)index {
+    
+    for (UIView * subView in self.contentVc.subviews) {
+        [subView removeFromSuperview];
+    }
+    
+        if (index == 0) {
+            // 当前需要显示的控制器索引
+            // 取出当前控制器
+            JXOneController * willShowVc = self.childViewControllers[index];
+    
+            willShowVc.headerViewBg = self.headerView;
+            willShowVc.selectViewBg = self.selectView;
+            willShowVc.banerViewBg = self.banerView;
+            willShowVc.contentSet = self.contentSet;
+            willShowVc.stop = self.stop;
+            // 计算控制器view的frame
+            willShowVc.view.frame = self.contentVc.bounds;
+            [self.contentVc addSubview:willShowVc.view];
+        } else {
+            JXTwoController * willShowVc = self.childViewControllers[index];
+    
+            willShowVc.headerViewBg = self.headerView;
+            willShowVc.selectViewBg = self.selectView;
+            willShowVc.banerViewBg = self.banerView;
+            willShowVc.contentSet = self.contentSet;
+            willShowVc.stop = self.stop;
+            // 计算控制器view的frame
+            willShowVc.view.frame = self.contentVc.bounds;
+            [self.contentVc addSubview:willShowVc.view];
+        }
+    
+    
+}
+
 @end

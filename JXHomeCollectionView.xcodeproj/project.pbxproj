@@ -15,7 +15,12 @@
 		262589461D9169C1005BE5F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 262589441D9169C1005BE5F8 /* LaunchScreen.storyboard */; };
 		262589511D9169C1005BE5F8 /* JXHomeCollectionViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 262589501D9169C1005BE5F8 /* JXHomeCollectionViewTests.m */; };
 		2625895C1D9169C1005BE5F8 /* JXHomeCollectionViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2625895B1D9169C1005BE5F8 /* JXHomeCollectionViewUITests.m */; };
-		2625896B1D917E68005BE5F8 /* UIView+JXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2625896A1D917E68005BE5F8 /* UIView+JXExtension.m */; };
+		2625897D1D92B20B005BE5F8 /* UIView+JXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2625897A1D92B20B005BE5F8 /* UIView+JXExtension.m */; };
+		262589801D92B22C005BE5F8 /* JXBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2625897F1D92B22C005BE5F8 /* JXBaseController.m */; };
+		262589851D92B25F005BE5F8 /* JXHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 262589821D92B25F005BE5F8 /* JXHeaderView.m */; };
+		262589861D92B25F005BE5F8 /* JXSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 262589841D92B25F005BE5F8 /* JXSelectView.m */; };
+		2625898B1D92B27B005BE5F8 /* JXOneController.m in Sources */ = {isa = PBXBuildFile; fileRef = 262589881D92B27B005BE5F8 /* JXOneController.m */; };
+		2625898C1D92B27B005BE5F8 /* JXTwoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2625898A1D92B27B005BE5F8 /* JXTwoController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +57,18 @@
 		262589571D9169C1005BE5F8 /* JXHomeCollectionViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JXHomeCollectionViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2625895B1D9169C1005BE5F8 /* JXHomeCollectionViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JXHomeCollectionViewUITests.m; sourceTree = "<group>"; };
 		2625895D1D9169C1005BE5F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		262589691D917E68005BE5F8 /* UIView+JXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JXExtension.h"; sourceTree = "<group>"; };
-		2625896A1D917E68005BE5F8 /* UIView+JXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JXExtension.m"; sourceTree = "<group>"; };
+		262589791D92B20B005BE5F8 /* UIView+JXExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JXExtension.h"; sourceTree = "<group>"; };
+		2625897A1D92B20B005BE5F8 /* UIView+JXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JXExtension.m"; sourceTree = "<group>"; };
+		2625897E1D92B22C005BE5F8 /* JXBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXBaseController.h; sourceTree = "<group>"; };
+		2625897F1D92B22C005BE5F8 /* JXBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXBaseController.m; sourceTree = "<group>"; };
+		262589811D92B25F005BE5F8 /* JXHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXHeaderView.h; sourceTree = "<group>"; };
+		262589821D92B25F005BE5F8 /* JXHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXHeaderView.m; sourceTree = "<group>"; };
+		262589831D92B25F005BE5F8 /* JXSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXSelectView.h; sourceTree = "<group>"; };
+		262589841D92B25F005BE5F8 /* JXSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXSelectView.m; sourceTree = "<group>"; };
+		262589871D92B27B005BE5F8 /* JXOneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXOneController.h; sourceTree = "<group>"; };
+		262589881D92B27B005BE5F8 /* JXOneController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXOneController.m; sourceTree = "<group>"; };
+		262589891D92B27B005BE5F8 /* JXTwoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JXTwoController.h; sourceTree = "<group>"; };
+		2625898A1D92B27B005BE5F8 /* JXTwoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JXTwoController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,12 +119,15 @@
 		262589351D9169C1005BE5F8 /* JXHomeCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				262589761D92B20B005BE5F8 /* HomeBase */,
 				262589391D9169C1005BE5F8 /* AppDelegate.h */,
 				2625893A1D9169C1005BE5F8 /* AppDelegate.m */,
 				2625893C1D9169C1005BE5F8 /* ViewController.h */,
 				2625893D1D9169C1005BE5F8 /* ViewController.m */,
-				262589691D917E68005BE5F8 /* UIView+JXExtension.h */,
-				2625896A1D917E68005BE5F8 /* UIView+JXExtension.m */,
+				262589871D92B27B005BE5F8 /* JXOneController.h */,
+				262589881D92B27B005BE5F8 /* JXOneController.m */,
+				262589891D92B27B005BE5F8 /* JXTwoController.h */,
+				2625898A1D92B27B005BE5F8 /* JXTwoController.m */,
 				2625893F1D9169C1005BE5F8 /* Main.storyboard */,
 				262589421D9169C1005BE5F8 /* Assets.xcassets */,
 				262589441D9169C1005BE5F8 /* LaunchScreen.storyboard */,
@@ -143,6 +161,53 @@
 				2625895D1D9169C1005BE5F8 /* Info.plist */,
 			);
 			path = JXHomeCollectionViewUITests;
+			sourceTree = "<group>";
+		};
+		262589761D92B20B005BE5F8 /* HomeBase */ = {
+			isa = PBXGroup;
+			children = (
+				262589771D92B20B005BE5F8 /* Controller */,
+				262589781D92B20B005BE5F8 /* Libs */,
+				2625897B1D92B20B005BE5F8 /* Model */,
+				2625897C1D92B20B005BE5F8 /* View */,
+			);
+			path = HomeBase;
+			sourceTree = "<group>";
+		};
+		262589771D92B20B005BE5F8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2625897E1D92B22C005BE5F8 /* JXBaseController.h */,
+				2625897F1D92B22C005BE5F8 /* JXBaseController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		262589781D92B20B005BE5F8 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				262589791D92B20B005BE5F8 /* UIView+JXExtension.h */,
+				2625897A1D92B20B005BE5F8 /* UIView+JXExtension.m */,
+			);
+			path = Libs;
+			sourceTree = "<group>";
+		};
+		2625897B1D92B20B005BE5F8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2625897C1D92B20B005BE5F8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				262589811D92B25F005BE5F8 /* JXHeaderView.h */,
+				262589821D92B25F005BE5F8 /* JXHeaderView.m */,
+				262589831D92B25F005BE5F8 /* JXSelectView.h */,
+				262589841D92B25F005BE5F8 /* JXSelectView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,8 +345,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2625893E1D9169C1005BE5F8 /* ViewController.m in Sources */,
+				262589861D92B25F005BE5F8 /* JXSelectView.m in Sources */,
 				2625893B1D9169C1005BE5F8 /* AppDelegate.m in Sources */,
-				2625896B1D917E68005BE5F8 /* UIView+JXExtension.m in Sources */,
+				262589801D92B22C005BE5F8 /* JXBaseController.m in Sources */,
+				2625898B1D92B27B005BE5F8 /* JXOneController.m in Sources */,
+				262589851D92B25F005BE5F8 /* JXHeaderView.m in Sources */,
+				2625897D1D92B20B005BE5F8 /* UIView+JXExtension.m in Sources */,
+				2625898C1D92B27B005BE5F8 /* JXTwoController.m in Sources */,
 				262589381D9169C1005BE5F8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

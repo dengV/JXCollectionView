@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
-
+/** 头部视图 */
+@property (nonatomic,weak) UIView * headView;
+/** scrollView */
+@property (nonatomic,weak) UIView * scrollView;
 @end
 
